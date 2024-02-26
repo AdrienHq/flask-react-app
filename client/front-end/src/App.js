@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { Channel } from './components/channel/Channel';
 
 function App() {
+  const [initialState, setState] = useState([])
+  const url = '/api'
+
+  useEffect(() => {
+    fetch(url).then(response => {
+      if(response.status == 200){
+        return response.json()
+      }
+    }).then(data => setState(data))
+  }, [])
+
+
   return (
     <div className="App">
-      <h1>Hello I'm react</h1>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+      <Channel data={initialState}></Channel>      
     </div>
   );
 }
